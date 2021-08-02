@@ -45,7 +45,6 @@ export const useShortenedLinks = () => {
 
       state.shortenedLinks = localShortenedLinks;
     } else {
-      console.log(`USERS`, users);
       createLocalStorage(users);
     }
   };
@@ -86,8 +85,6 @@ export const useShortenedLinks = () => {
     );
 
     state.shortenedLinks[userId].splice(indexToDelete, 1);
-
-    console.log(indexToDelete);
 
     setLocalShortenedLinks(state.shortenedLinks);
   };
