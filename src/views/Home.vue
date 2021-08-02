@@ -8,9 +8,7 @@
       <p v-if="error.length >= 1" class="text-base text-red-700">{{ error }}</p>
     </div>
 
-    <div class="mt-12">
-      <LinkList />
-    </div>
+    <LinkList />
   </main>
 </template>
 
