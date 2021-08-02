@@ -1,5 +1,5 @@
 <template>
-  <main class="max-w-xl mx-auto">
+  <main class="max-w-xl mx-auto py-8">
     <UserSwitcher />
 
     <Form />

@@ -1,11 +1,10 @@
 <template>
-  <form @submit.prevent="shortenUrl">
+  <form @submit.prevent="shortenUrl" id="UrlInputForm">
     <section class="flex flex-col items-start justify-start gap-y-2">
       <label
         for="UrlInput"
         class="text-sm uppercase font-bold text-coolGray-600"
-        >URL Input</label
-      >
+        >URL Input</label>
 
       <div class="grid grid-cols-12 gap-x-2 w-full">
         <input
