@@ -3,8 +3,9 @@ import { reactive, toRefs } from "vue";
 const LOCAL_STORAGE_KEY = `useShortenedLinks`;
 
 const state = reactive({
-  shortenedLinks: [],
+  shortenedLinks: {},
   shortenedLink: ``,
+  urlInput: ``,
   error: ``,
   loading: false,
 });
@@ -16,10 +17,19 @@ export const useShortenedLinks = () => {
 
   const setError = (data) => {
     state.error = data;
+
+    setTimeout(() => {
+      state.error = ``;
+    }, 5000);
   };
 
-  const createLocalStorage = () => {
+  const createLocalStorage = (users) => {
     if (window && !window.localStorage.getItem(LOCAL_STORAGE_KEY)) {
+      state.shortenedLinks = {
+        [users[0].id]: [],
+        [users[1].id]: [],
+      };
+
       window.localStorage.setItem(
         LOCAL_STORAGE_KEY,
         stringifyData(state.shortenedLinks)
@@ -27,7 +37,7 @@ export const useShortenedLinks = () => {
     }
   };
 
-  const getLocalShortenedLinks = () => {
+  const getLocalShortenedLinks = (users) => {
     if (window && window.localStorage.getItem(LOCAL_STORAGE_KEY)) {
       const localShortenedLinks = JSON.parse(
         window.localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -35,7 +45,8 @@ export const useShortenedLinks = () => {
 
       state.shortenedLinks = localShortenedLinks;
     } else {
-      createLocalStorage();
+      console.log(`USERS`, users);
+      createLocalStorage(users);
     }
   };
 
@@ -45,9 +56,9 @@ export const useShortenedLinks = () => {
     }
   };
 
-  const updateShortenedLinks = (data) => {
-    state.shortenedLinks = data;
-    setLocalShortenedLinks(data);
+  const updateShortenedLinks = (data, userId) => {
+    state.shortenedLinks[userId].push(data);
+    setLocalShortenedLinks(state.shortenedLinks);
   };
 
   const storeLink = (data, userId) => {
@@ -62,27 +73,28 @@ export const useShortenedLinks = () => {
         createdAt,
       };
 
-      const updatedShortenedLinks = [
-        formattedShortenedLink,
-        ...state.shortenedLinks,
-      ];
-      updateShortenedLinks(updatedShortenedLinks);
+      updateShortenedLinks(formattedShortenedLink, userId);
+      state.urlInput = ``;
+    } else {
+      setError(`You already shortened this link!`);
     }
   };
 
-  const deleteStoredLink = (id) => {
-    const filteredLinks = state.shortenedLinks.filter((shortenedLink) => {
-      return shortenedLink.id != id;
-    });
+  const deleteStoredLink = (id, userId) => {
+    const indexToDelete = state.shortenedLinks[userId].findIndex(
+      (link) => link.id === id
+    );
 
-    updateShortenedLinks(filteredLinks);
+    state.shortenedLinks[userId].splice(indexToDelete, 1);
+
+    console.log(indexToDelete);
+
+    setLocalShortenedLinks(state.shortenedLinks);
   };
 
   const storedLinksContainsDuplicate = (originalURL, userId) => {
-    const duplicates = state.shortenedLinks.find(
-      (shortenedLink) =>
-        shortenedLink.originalURL === originalURL &&
-        shortenedLink.userId === userId
+    const duplicates = state.shortenedLinks[userId].find(
+      (shortenedLink) => shortenedLink.originalURL === originalURL
     );
 
     const duplicateExists = typeof duplicates !== `undefined`;

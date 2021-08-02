@@ -1,25 +1,49 @@
 <template>
   <form @submit.prevent="shortenUrl">
-    <div class="flex flex-col items-start justify-start gap-y-2">
+    <section class="flex flex-col items-start justify-start gap-y-2">
       <label
         for="UrlInput"
         class="text-sm uppercase font-bold text-coolGray-600"
         >URL Input</label
       >
-      <input
-        v-model="urlInput"
-        type="text"
-        name="UrlInput"
-        id="UrlInput"
-        class="border border-coolGray-400 px-2 py-1 text-base rounded-lg"
-      />
-      <button
-        type="submit"
-        class="bg-pink-300 text-pink-900 px-4 py-1 text-base rounded-lg"
-      >
-        Shorten Url!
-      </button>
-    </div>
+
+      <div class="grid grid-cols-12 gap-x-2 w-full">
+        <input
+          v-model="urlInput"
+          type="text"
+          name="UrlInput"
+          id="UrlInput"
+          class="
+            col-span-8
+            border border-coolGray-400
+            px-2
+            py-1
+            text-base
+            rounded-lg
+          "
+          tabindex="1"
+          autofocus
+        />
+        <button
+          type="submit"
+          class="
+            col-span-4
+            bg-pink-300
+            text-pink-900
+            border border-pink-500 border-dotted
+            hover:bg-pink-200 hover:border-pink-400
+            focus:bg-pink-200 focus:border-pink-400
+            px-4
+            py-1
+            text-base
+            rounded-lg
+          "
+          tabindex="2"
+        >
+          Shorten!
+        </button>
+      </div>
+    </section>
   </form>
 </template>
 
@@ -27,17 +51,17 @@
 import axios from "axios";
 import { useUsers } from "./hooks/useUsers";
 import { useShortenedLinks } from "./hooks/useShortenedLinks";
-import { ref } from "vue";
 
 export default {
   name: `Form`,
 
   setup() {
     const { activeUser } = useUsers();
-    const { storeLink, setError } = useShortenedLinks();
-    const urlInput = ref(``);
+    const { storeLink, setError, urlInput } = useShortenedLinks();
 
     const getShortenedUrl = async () => {
+      setError(``);
+
       const shortenerResponse = await axios
         .post(
           `https://api.short.io/links/public`,
