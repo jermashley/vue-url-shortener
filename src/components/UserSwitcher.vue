@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-row items-center justify-center gap-x-2 mb-12">
+  <div class="flex flex-row items-center justify-end gap-x-2 mb-12">
     <label for="users" class="text-sm uppercase font-bold text-coolGray-600"
-      >Select a user</label
+      >Switch users</label
     >
 
     <select
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { useUsers } from "../components/hooks/useUsers";
+import { useUsers } from "./hooks/useUsers";
 
 export default {
   name: "UserSwitcher",

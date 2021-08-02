@@ -57,7 +57,7 @@ export const useShortenedLinks = () => {
   };
 
   const updateShortenedLinks = (data, userId) => {
-    state.shortenedLinks[userId].push(data);
+    state.shortenedLinks[userId].unshift(data);
     setLocalShortenedLinks(state.shortenedLinks);
   };
 

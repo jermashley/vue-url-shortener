@@ -4,7 +4,7 @@
       <label
         for="UrlInput"
         class="text-sm uppercase font-bold text-coolGray-600"
-        >URL Input</label>
+        >Add a URL</label>
 
       <div class="grid grid-cols-12 gap-x-2 w-full">
         <input
