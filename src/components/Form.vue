@@ -1,17 +1,19 @@
 <template>
   <form @submit.prevent="shortenUrl" id="UrlInputForm">
-    <section class="flex flex-col items-start justify-start gap-y-2">
+    <section class="flex flex-col items-start justify-start gap-y-1">
       <label
         for="UrlInput"
         class="text-sm uppercase font-bold text-coolGray-600"
-        >Add a URL</label>
+        >Enter a URL below</label
+      >
 
-      <div class="grid grid-cols-12 gap-x-2 w-full">
+      <div class="grid grid-cols-12 gap-x-1 w-full">
         <input
           v-model="urlInput"
           type="text"
           name="UrlInput"
           id="UrlInput"
+          placeholder="https://google.com"
           class="
             col-span-8
             border border-coolGray-400
@@ -19,6 +21,7 @@
             py-1
             text-base
             rounded-lg
+            placeholder-coolGray-400
           "
           tabindex="1"
           autofocus

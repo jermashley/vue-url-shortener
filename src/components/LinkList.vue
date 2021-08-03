@@ -1,6 +1,9 @@
 <template>
   <section class="mt-12">
-    <p v-if="shortenedLinks[activeUser]?.length === 0">
+    <p
+      v-if="shortenedLinks[activeUser]?.length === 0"
+      class="text-center text-coolGray-400 text-lg font-regular"
+    >
       You haven't shortened any links yet!
     </p>
 
