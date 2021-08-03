@@ -1,8 +1,10 @@
 <template>
   <section class="mt-12">
+    <h1 class="text-xl text-coolGray-600 mb-4">Shortened URLs</h1>
+
     <p
       v-if="shortenedLinks[activeUser]?.length === 0"
-      class="text-center text-coolGray-400 text-lg font-regular"
+      class="text-center text-coolGray-400 text-lg font-regular mt-8"
     >
       You haven't shortened any links yet!
     </p>
@@ -12,39 +14,19 @@
         grid grid-cols-12
         gap-x-4 gap-y-2
         w-full
-        p-2
-        rounded-t-lg
-        bg-coolGray-200
-        uppercase
-        font-bold
-        text-sm
-      "
-      v-if="shortenedLinks[activeUser].length >= 1"
-    >
-      <div class="col-span-5">Original Link</div>
-
-      <div class="col-span-5">Shortened Link</div>
-
-      <div
-        class="opacity-0 group-hover:opacity-100 col-span-2 justify-self-end"
-      >
-        <!--        -->
-      </div>
-    </div>
-
-    <div
-      class="
-        grid grid-cols-12
-        gap-x-4 gap-y-2
-        w-full
-        p-2
-        hover:bg-coolGray-100
+        px-4
+        py-2
+        border border-transparent
+        hover:border-coolGray-200 hover:shadow-sm
+        transition transition-colors transition-shadow
+        duration-300
+        rounded-xl
         group
       "
       v-for="link in shortenedLinks[activeUser]"
       :key="link.id"
     >
-      <div class="col-span-5 text-sm self-center">
+      <div class="col-span-5 text-sm self-center text-coolGray-500 font-light">
         {{ link.originalURL }}
       </div>
 
@@ -58,11 +40,18 @@
             flex flex-row
             justify-start
             items-center
-            gap-x-2
+            gap-x-1
           "
         >
           <span>{{ link.secureShortURL }}</span>
-          <span class="opacity-0 group-hover:opacity-100">
+          <span
+            class="
+              opacity-0
+              group-hover:opacity-100
+              transition transition-opacity
+              duration-500
+            "
+          >
             <svg
               width="10"
               height="11"
@@ -83,6 +72,8 @@
         class="
           opacity-0
           group-hover:opacity-100
+          transition transition-opacity
+          duration-500
           col-span-2
           justify-self-end
           self-center
@@ -90,7 +81,7 @@
       >
         <button
           @click="deleteStoredLink(link.id, activeUser)"
-          class="p-2 bg-transparent hover:bg-red-100 rounded"
+          class="p-2 bg-transparent hover:bg-red-100 rounded-lg"
         >
           <svg
             width="12"

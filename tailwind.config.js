@@ -5,12 +5,15 @@ module.exports = {
   darkMode: "media",
   theme: {
     colors: {
+      transparent: `rgba(0, 0, 0, 0)`,
       ...colors,
     },
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      boxShadow: [`hover`],
+    },
   },
   plugins: [],
 };
